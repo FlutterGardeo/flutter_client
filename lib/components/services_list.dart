@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_client/components/device_card.dart';
+import 'package:flutter_client/components/service_card.dart';
 
 class ServicesList extends StatelessWidget {
   final List<Map<String, dynamic>> products;
@@ -12,10 +13,9 @@ class ServicesList extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (BuildContext context, int index) {
         final product = products[index];
-        return DeviceCard(
-          imageUrl: product['imageUrl'],
-          title: product['title'],
-          price: product['price'],
+        return ServiceCard(
+          description: product['description'],
+          name: product['name'],
           onAddToCart: () {
             // handle add to cart button press
           },

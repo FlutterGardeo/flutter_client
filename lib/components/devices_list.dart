@@ -14,8 +14,10 @@ class DevicesList extends StatelessWidget {
         final product = products[index];
         return DeviceCard(
           imageUrl: product['imageUrl'],
-          title: product['title'],
+          name: product['name'],
           price: product['price'],
+          description: product['description'],
+          manufacturer: product['manufacturer'],
           onAddToCart: () {
             // handle add to cart button press
           },

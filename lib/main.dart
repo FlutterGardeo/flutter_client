@@ -27,24 +27,24 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(name: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.name});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
   // how it looks.
 
   // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
+  // case the name) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+  final String name;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -96,35 +96,38 @@ class _MyHomePageState extends State<MyHomePage> {
               DevicesList(products: [
                 {
                   'imageUrl': 'https://picsum.photos/250?image=9',
-                  'title': 'Example device 1',
+                  'name': 'Example device 1',
+                  'description': 'Example description 1',
+                  'manufacturer': 'Example manufacturer 1',
                   'price': 19.99,
                 },
                 {
                   'imageUrl': 'https://picsum.photos/250?image=9',
-                  'title': 'Example device 2',
+                  'name': 'Example device 2',
+                  'description': 'Example description 2',
+                  'manufacturer': 'Example manufacturer 2',
                   'price': 29.99,
                 },
                 {
                   'imageUrl': 'https://picsum.photos/250?image=9',
-                  'title': 'Example device 3',
+                  'name': 'Example device 3',
+                  'description': 'Example description 3',
+                  'manufacturer': 'Example manufacturer 3',
                   'price': 39.99,
                 },
               ]),
               ServicesList(products: [
                 {
-                  'imageUrl': 'https://picsum.photos/250?image=9',
-                  'title': 'Example service 1',
-                  'price': 19.99,
+                  'description': 'decsr',
+                  'name': 'Example service 1',
                 },
                 {
-                  'imageUrl': 'https://picsum.photos/250?image=9',
-                  'title': 'Example service 2',
-                  'price': 29.99,
+                  'description': 'decsr',
+                  'name': 'Example service 2',
                 },
                 {
-                  'imageUrl': 'https://picsum.photos/250?image=9',
-                  'title': 'Example service 3',
-                  'price': 39.99,
+                  'description': 'decsr',
+                  'name': 'Example service 3',
                 },
               ]),
             ],

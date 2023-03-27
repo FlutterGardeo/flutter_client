@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
 class DeviceCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
+  final String name;
   final double price;
+  final String description;
+  final String manufacturer;
+  final String imageUrl;
   final VoidCallback onAddToCart;
 
   const DeviceCard({
     Key? key,
-    required this.imageUrl,
-    required this.title,
+    required this.name,
     required this.price,
+    required this.description,
+    required this.manufacturer,
+    required this.imageUrl,
     required this.onAddToCart,
   }) : super(key: key);
 
@@ -28,7 +32,21 @@ class DeviceCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              title,
+              name,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              description,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              manufacturer,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),

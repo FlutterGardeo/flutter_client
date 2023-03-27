@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final double price;
+  final String description;
+  final String name;
   final VoidCallback onAddToCart;
 
   const ServiceCard({
     Key? key,
-    required this.imageUrl,
-    required this.title,
-    required this.price,
+    required this.description,
+    required this.name,
     required this.onAddToCart,
   }) : super(key: key);
 
@@ -20,23 +18,11 @@ class ServiceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.network(
-            imageUrl,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              title,
+              name,
               style: Theme.of(context).textTheme.headline6,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              '\$${price.toStringAsFixed(2)}',
-              style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
           SizedBox(height: 8),
