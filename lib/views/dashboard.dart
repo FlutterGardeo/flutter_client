@@ -1,10 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_client/components/device_card.dart';
+import 'package:flutter_client/services/data_service.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../auth/asgardeo_service.dart';
-import '../components/devices_list.dart';
+
 import '../components/services_list.dart';
 import '../providers/user_provider.dart';
 
@@ -58,31 +58,64 @@ class Dashboard extends HookWidget {
             ),
           ],
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            DevicesList(products: [
-              {
-                'imageUrl': 'https://picsum.photos/250?image=9',
-                'name': 'Example device 1',
-                'description': 'Example description 1',
-                'manufacturer': 'Example manufacturer 1',
-                'price': 19.99,
+            FutureBuilder(
+              future: DataService.getAllDevices(),
+              builder: (context, snapshot) {
+                print(snapshot.data);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasData) {
+                  List _items = snapshot.data as List;
+
+                  if (_items.length > 0) {
+                    return ListView(
+                      padding: const EdgeInsets.fromLTRB(70, 50, 70, 10),
+                      children: List.generate(_items.length, (index) {
+                        return DeviceCard(
+                          imageUrl: _items[index].imageUrl,
+                          name: _items[index].name,
+                          description: _items[index].description,
+                          manufacturer: _items[index].manufacturer,
+                          price: _items[index].price,
+                          onAddToCart: () {},
+                        );
+                      }),
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  if (snapshot.error.runtimeType == DioError) {
+                    DioError _error = snapshot.error as DioError;
+                    return Text(_error.toString());
+                  }
+                }
+                return const Text("Something went wrong");
               },
-              {
-                'imageUrl': 'https://picsum.photos/250?image=9',
-                'name': 'Example device 2',
-                'description': 'Example description 2',
-                'manufacturer': 'Example manufacturer 2',
-                'price': 29.99,
-              },
-              {
-                'imageUrl': 'https://picsum.photos/250?image=9',
-                'name': 'Example device 3',
-                'description': 'Example description 3',
-                'manufacturer': 'Example manufacturer 3',
-                'price': 39.99,
-              },
-            ]),
+            ),
+            // DevicesList(products: [
+            //   {
+            //     'imageUrl': 'https://picsum.photos/250?image=9',
+            //     'name': 'Example device 1',
+            //     'description': 'Example description 1',
+            //     'manufacturer': 'Example manufacturer 1',
+            //     'price': 19.99,
+            //   },
+            //   {
+            //     'imageUrl': 'https://picsum.photos/250?image=9',
+            //     'name': 'Example device 2',
+            //     'description': 'Example description 2',
+            //     'manufacturer': 'Example manufacturer 2',
+            //     'price': 29.99,
+            //   },
+            //   {
+            //     'imageUrl': 'https://picsum.photos/250?image=9',
+            //     'name': 'Example device 3',
+            //     'description': 'Example description 3',
+            //     'manufacturer': 'Example manufacturer 3',
+            //     'price': 39.99,
+            //   },
+            // ]),
             ServicesList(products: [
               {
                 'description': 'decsr',
