@@ -39,6 +39,26 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   }
 
   @override
+  _AuthorizationPageState createState() => _AuthorizationPageState();
+}
+
+class _AuthorizationPageState extends State<AuthorizationPage> {
+  final AppAuthService _authService = AppAuthService();
+  AuthorizationTokenResponse? _authResponse;
+
+  Future<void> _handleLogin() async {
+    final result = await _authService.authorizeAndExchangeCode();
+
+    if (result != null) {
+      setState(() {
+        _authResponse = result;
+      });
+
+      Navigator.pushNamed(context, '/dashboard');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final _currentUserProvider = useProvider(currentUserProvider);
 
