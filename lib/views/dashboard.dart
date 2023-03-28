@@ -3,6 +3,8 @@ import '../components/devices_list.dart';
 import '../components/services_list.dart';
 
 class Dashboard extends StatelessWidget {
+  static const routeName = "/dashboard";
+
   const Dashboard({
     super.key,
   });
