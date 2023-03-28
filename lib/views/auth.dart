@@ -10,12 +10,33 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/user_view_model.dart';
 import '../providers/user_provider.dart';
+import '../services/flutter_app_auth.dart';
 
-class AuthorizationPage extends HookWidget {
+class AuthorizationPage extends StatefulHookWidget {
   static const routeName = '/auth-page';
 
   AuthorizationPage({Key? key}) : super(key: key);
   AuthorizationTokenResponse? tokenResponse = null;
+
+  @override
+  _AuthorizationPageState createState() => _AuthorizationPageState();
+}
+
+class _AuthorizationPageState extends State<AuthorizationPage> {
+  final AppAuthService _authService = AppAuthService();
+  AuthorizationTokenResponse? _authResponse;
+
+  Future<void> _handleLogin() async {
+    final result = await _authService.authorizeAndExchangeCode();
+
+    if (result != null) {
+      setState(() {
+        _authResponse = result;
+      });
+
+      Navigator.pushNamed(context, '/dashboard');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +44,7 @@ class AuthorizationPage extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Authorization'),
+        title: const Text('Initial Page'),
       ),
       body: Center(
         child: Column(
@@ -49,12 +70,9 @@ class AuthorizationPage extends HookWidget {
               },
               child: Text('Sign in'),
             ),
-            const SizedBox(height: 16),
-            OutlinedButton(
-              onPressed: () {
-                // handle sign up button press
-              },
-              child: const Text('Sign up'),
+            ElevatedButton(
+              onPressed: _handleLogin,
+              child: const Text('Login'),
             ),
           ],
         ),

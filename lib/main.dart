@@ -11,7 +11,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         Splash.routeName: (context) => const Splash(),
         AuthorizationPage.routeName: (context) => AuthorizationPage(),
         AuthChecker.routeName: (context) => const AuthChecker(),
-        Dashboard.routeName: (context) => const Dashboard(),
+        Dashboard.routeName: (context) =>  Dashboard(),
       },
     );
   }
