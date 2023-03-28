@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_client/views/auth.dart';
-import 'package:flutter_client/views/dashboard.dart';
+import 'package:flutter_client/views/splash.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'views/auth_checker.dart';
+import 'views/dashboard.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,10 +20,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      home: const Splash(),
       routes: {
-        AuthorizationPage.routeName: (context) => const AuthorizationPage(),
-        Dashboard.routeName: (context) => const Dashboard(),
+        Splash.routeName: (context) => const Splash(),
+        AuthorizationPage.routeName: (context) => AuthorizationPage(),
+        AuthChecker.routeName: (context) => const AuthChecker(),
+        Dashboard.routeName: (context) =>  Dashboard(),
       },
     );
   }

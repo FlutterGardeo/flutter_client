@@ -8,13 +8,11 @@ class AppAuthService {
 
   Future<AuthorizationTokenResponse?> authorizeAndExchangeCode() async {
     try {
-      final AuthorizationTokenResponse? result =
-          await _appAuth.authorizeAndExchangeCode(
+      final AuthorizationTokenResponse? result = await _appAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
-          'CupfurPk3WnXKtKTPu_elhf68oYa',
-          'com.wso2.exampleorg://login-callback',
-          discoveryUrl:
-              'https://api.asgardeo.io/t/exampleorg/oauth2/token/.well-known/openid-configuration',
+          'yKmNU_zdXWi2i7zEwDnsuCycKJga',
+          'com.wso2.kfonelk://login-callback',
+          discoveryUrl: 'https://api.asgardeo.io/t/kfonelk/oauth2/token/.well-known/openid-configuration',
           scopes: ["openid", "email", "profile", "internal_login"],
         ),
       );

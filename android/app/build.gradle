@@ -53,7 +53,7 @@ android {
         versionName flutterVersionName
 
         manifestPlaceholders += [
-                'appAuthRedirectScheme': 'com.wso2.exampleorg'
+                'appAuthRedirectScheme': 'com.wso2.kfonelk'
         ]
     }
 
