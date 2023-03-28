@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../components/devices_list.dart';
 import 'package:flutter_client/components/device_card.dart';
+import 'package:flutter_client/components/service_card.dart';
 import 'package:flutter_client/services/data_service.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -81,6 +82,36 @@ class Dashboard extends StatelessWidget {
                 return const Text("Something went wrong");
               },
             ),
+            FutureBuilder(
+              future: DataService.getAllServices(),
+              builder: (context, snapshot) {
+                print(snapshot.data);
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasData) {
+                  List _items = snapshot.data as List;
+
+                  if (_items.length > 0) {
+                    return ListView(
+                      padding: const EdgeInsets.fromLTRB(70, 50, 70, 10),
+                      children: List.generate(_items.length, (index) {
+                        return ServiceCard(
+                          name: _items[index].name,
+                          description: _items[index].description,
+                          onAddToCart: () {},
+                        );
+                      }),
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  if (snapshot.error.runtimeType == DioError) {
+                    DioError _error = snapshot.error as DioError;
+                    return Text(_error.toString());
+                  }
+                }
+                return const Text("Something went wrong");
+              },
+            ),
             // DevicesList(products: [
             //   {
             //     'imageUrl': 'https://picsum.photos/250?image=9',
@@ -104,20 +135,20 @@ class Dashboard extends StatelessWidget {
             //     'price': 39.99,
             //   },
             // ]),
-            ServicesList(products: [
-              {
-                'description': 'decsr',
-                'name': 'Example service 1',
-              },
-              {
-                'description': 'decsr',
-                'name': 'Example service 2',
-              },
-              {
-                'description': 'decsr',
-                'name': 'Example service 3',
-              },
-            ]),
+            // ServicesList(products: [
+            //   {
+            //     'description': 'decsr',
+            //     'name': 'Example service 1',
+            //   },
+            //   {
+            //     'description': 'decsr',
+            //     'name': 'Example service 2',
+            //   },
+            //   {
+            //     'description': 'decsr',
+            //     'name': 'Example service 3',
+            //   },
+            // ]),
           ],
         ),
       ),

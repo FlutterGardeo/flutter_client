@@ -25,6 +25,10 @@ class ServiceCard extends StatelessWidget {
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(description, style: Theme.of(context).textTheme.bodyMedium),
+          ),
           SizedBox(height: 8),
           ElevatedButton(
             onPressed: onAddToCart,
