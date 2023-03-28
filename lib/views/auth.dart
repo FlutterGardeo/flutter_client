@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
@@ -36,6 +37,8 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
 
       // Update state
       Map<String, dynamic> payload = Jwt.parseJwt(_authResponse!.idToken.toString());
+      log(_authResponse!.accessToken.toString());
+      log(_authResponse!.idToken.toString());
       UserViewModel user = UserViewModel.fromJson(payload);
 
       // Update the user details in the provider for state.
