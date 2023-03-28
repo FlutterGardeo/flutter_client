@@ -37,7 +37,7 @@ class Dashboard extends HookWidget {
               ),
             ],
           ),
-          title: Text('Welcome to Kfone!' + _currentUserProvider.state.email!),
+          title: Text('Welcome ' + _currentUserProvider.state.email! + '!'),
           actions: [
             IconButton(
               icon: Icon(Icons.logout),
