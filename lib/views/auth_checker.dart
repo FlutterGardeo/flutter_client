@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_client/views/auth.dart';
@@ -5,6 +7,8 @@ import 'package:flutter_client/views/dashboard.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/user_view_model.dart';
 import '../providers/user_provider.dart';
 
 class AuthChecker extends StatefulHookWidget {
@@ -20,16 +24,21 @@ class _AuthCheckerState extends State<AuthChecker> {
   String? user;
 
   Future<AuthorizationTokenResponse?> getLocalUser() async {
-    // TODO-get user from shared prefs.
-    user = "";
-
+    // Get user from SharedPreferences.
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.get("user") as AuthorizationTokenResponse?;
+    String jsonUser = prefs.getString('kfone_user')!;
+    Map<String, dynamic> userMap = jsonDecode(jsonUser);
+    UserViewModel user = UserViewModel.fromJson(userMap);
+
+    // Update the user details in the provider for state.
+    context.read(currentUserProvider).state = user;
   }
 
   @override
   void initState() {
     super.initState();
+
+    getLocalUser();
   }
 
   @override
@@ -38,7 +47,7 @@ class _AuthCheckerState extends State<AuthChecker> {
     //TODO-add auth check here.
 
     // If user state is filled with valid id (user found in SharedPreferences, go to dashboard.))
-    if (_currentUserProvider.state.id != null) {
+    if (_currentUserProvider.state.email != null) {
       return const Dashboard();
     }
     return AuthorizationPage();
