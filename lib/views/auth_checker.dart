@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
@@ -23,21 +24,26 @@ class AuthChecker extends StatefulHookWidget {
 class _AuthCheckerState extends State<AuthChecker> {
   String? user;
 
-  Future<AuthorizationTokenResponse?> getLocalUser() async {
+  Future<UserViewModel?> getLocalUser() async {
     // Get user from SharedPreferences.
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String jsonUser = prefs.getString('kfone_user')!;
+    String? jsonUser = prefs.getString('kfone_user');
+    if (jsonUser == null) {
+      return null;
+    }
     Map<String, dynamic> userMap = jsonDecode(jsonUser);
+    log(userMap.toString());
     UserViewModel user = UserViewModel.fromJson(userMap);
 
-    // Update the user details in the provider for state.
     context.read(currentUserProvider).state = user;
+    return user;
   }
 
   @override
   void initState() {
     super.initState();
 
+    // Update the user details in the provider for state.
     getLocalUser();
   }
 
