@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_client/components/services_list.dart';
 import 'package:flutter_client/views/auth.dart';
+import 'package:flutter_client/views/splash.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'components/devices_list.dart';
+import 'views/auth_checker.dart';
 import 'views/dashboard.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,25 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(name: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.name});
-
-  final String name;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AuthorizationPage(),
+      home: const Splash(),
+      routes: {
+        Splash.routeName: (context) => const Splash(),
+        AuthorizationPage.routeName: (context) => AuthorizationPage(),
+        AuthChecker.routeName: (context) => const AuthChecker(),
+        Dashboard.routeName: (context) => const Dashboard(),
+      },
     );
   }
 }
