@@ -28,6 +28,17 @@ class Dashboard extends StatelessWidget {
             ],
           ),
           title: const Text('Welcome to Kfone!'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                // handle logout here
+                // TODO
+                
+              },
+              tooltip: 'Logout',
+            ),
+          ],
         ),
         body: const TabBarView(
           children: [
