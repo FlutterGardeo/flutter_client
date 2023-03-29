@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DeviceCard extends StatelessWidget {
+  final String? id;
   final String? name;
   final double price;
   final String? description;
@@ -10,6 +11,7 @@ class DeviceCard extends StatelessWidget {
 
   const DeviceCard({
     Key? key,
+    required this.id,
     required this.name,
     required this.price,
     required this.description,
