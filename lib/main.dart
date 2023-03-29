@@ -8,6 +8,7 @@ import 'package:flutter_client/screens/initial_screen.dart';
 import 'package:flutter_client/config/constants.dart';
 import 'package:flutter_client/screens/admin_portal_screen.dart';
 import 'package:flutter_client/screens/user_portal_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(KFoneClient());
@@ -39,13 +40,6 @@ class KFoneClient extends StatelessWidget {
           '/user': (context) => Consumer<AuthProvider>(
                 builder: (context, auth, _) {
                   if (auth.isAuthenticated) {
-                    // if (auth.getAuthorizedUser?.lastName != null) {
-                    //   print("Admin User");
-                    //   return LogoutScreen();
-                    // } else {
-                    //   print("NOT Admin User");
-                    //   return LogoutScreen();
-                    // }
                     return UserPortal();
                   } else {
                     return LoginScreen();
@@ -55,13 +49,6 @@ class KFoneClient extends StatelessWidget {
           '/admin': (context) => Consumer<AuthProvider>(
                 builder: (context, auth, _) {
                   if (auth.isAuthenticated) {
-                    // if (auth.getAuthorizedUser?.lastName != null) {
-                    //   print("Admin User");
-                    //   return AdminPortal();
-                    // } else {
-                    //   print("NOT Admin User");
-                    //   return LoginScreen();
-                    // }
                     return AdminPortal();
                   } else {
                     return LoginScreen();

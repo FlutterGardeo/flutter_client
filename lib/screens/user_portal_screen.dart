@@ -74,8 +74,9 @@ class _UserPortalState extends State<UserPortal> {
                       img: "assets/log-out.png",
                       action: () async {
                         try {
+                          print('logout user');
                           await auth.logout();
-                          Navigator.popUntil(context, ModalRoute.withName('/'));
+                          // Navigator.popUntil(context, ModalRoute.withName('/'));
                         } catch (error) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
