@@ -1,4 +1,5 @@
 Kfone
+
 Introducing the ultimate mobile app for purchasing your favorite devices and online services! Our app offers a one-stop-shop for all your tech needs, including smartphones, tablets, wearable devices, wireless services, internet services, and cloud services.
 
 Special Features
@@ -27,6 +28,7 @@ Special Features
 
 
 Scopes
+
 :dart:Auth Scope
 Username(non-email)/password
 Google
