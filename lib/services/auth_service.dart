@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_client/models/user_view_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import "package:http/http.dart" as http;
@@ -70,7 +71,7 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getUserDetails() async {
+  Future<UserViewModel> getUserDetails() async {
     final response = await http.get(
       Uri.parse(dotenv.env['USER_INFO_URL']!),
       headers: {"Authorization": "Bearer ${authResponse?.accessToken}"},
@@ -86,12 +87,18 @@ class AuthProvider with ChangeNotifier {
       print(responseMap['email']);
       print(responseMap['given_name']);
       print(responseMap['family_name']);
-      authorizedUser = User(
-          email: responseMap['email'],
-          firstName: responseMap['given_name'],
-          lastName: responseMap['family_name']);
+      authorizedUser = User(email: responseMap['email'], firstName: responseMap['given_name'], lastName: responseMap['family_name']);
+
+      return UserViewModel.fromJson({
+        "email": responseMap['email'],
+        "firstName": responseMap['given_name'],
+        "lastName": responseMap['family_name'],
+        "accessToken": authResponse?.accessToken,
+      });
     } else {
       throw Exception('Failed to get user details');
     }
   }
+
+  String get accessToken => authResponse?.accessToken ?? "";
 }
