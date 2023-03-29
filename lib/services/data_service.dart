@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -29,7 +30,7 @@ class DataService {
       print(response.data.length);
       for (var i = 0; i < response.data.length; i++) {
         devices.add(DeviceModel(
-          id: response.data[i]["id"],
+          id: response.data[i]["_id"],
           name: response.data[i]["name"],
           description: response.data[i]["description"],
           manufacturer: response.data[i]["manufacturer"],
@@ -61,12 +62,47 @@ class DataService {
       print(response.data.length);
       for (var i = 0; i < response.data.length; i++) {
         services.add(ServiceModel(
-          id: response.data[i]["id"],
+          id: response.data[i]["_id"],
           name: response.data[i]["name"],
           description: response.data[i]["description"],
         ));
       }
     }
     return services;
+  }
+
+  static Future create(
+    String userId,
+    String itemType,
+    String itemId,
+  ) async {
+    final dio = Dio();
+    // dio.interceptors.addAll([
+    //   AuthInterceptor(dio),
+    // ]);
+
+    Map<String, dynamic> data = {
+      "itemType": itemType,
+      "userId": userId,
+      "itemId": itemId,
+    };
+
+    String jsonData = json.encode(data);
+
+    inspect(jsonData);
+
+    String _url = API_BASE_URL + '/add';
+
+    Response _response = await dio.post(
+      _url,
+      data: jsonData,
+      options: Options(
+        headers: {HttpHeaders.contentTypeHeader: "application/json"},
+      ),
+    );
+
+    if (_response.statusCode == 201) {}
+
+    return true;
   }
 }

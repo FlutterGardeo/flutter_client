@@ -75,12 +75,20 @@ class DevicesAndServices extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(70, 50, 70, 10),
                       children: List.generate(_items.length, (index) {
                         return DeviceCard(
+                          id: _items[index].id,
                           imageUrl: _items[index].imageUrl,
                           name: _items[index].name,
                           description: _items[index].description,
                           manufacturer: _items[index].manufacturer,
                           price: _items[index].price,
-                          onAddToCart: () {},
+                          onAddToCart: () {
+                            print(_items[index].id);
+                            try {
+                              DataService.create('40941c02-e0ae-4d90-a23e-5471ae5b2b4e', 'device', _items[index].id.toString());
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
                         );
                       }),
                     );
@@ -108,9 +116,17 @@ class DevicesAndServices extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(70, 50, 70, 10),
                       children: List.generate(_items.length, (index) {
                         return ServiceCard(
+                          id: _items[index].id,
                           name: _items[index].name,
                           description: _items[index].description,
-                          onAddToCart: () {},
+                          onAddToCart: () {
+                            print(_items[index].id);
+                            try {
+                              DataService.create('40941c02-e0ae-4d90-a23e-5471ae5b2b4e', 'service', _items[index].id.toString());
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
                         );
                       }),
                     );
