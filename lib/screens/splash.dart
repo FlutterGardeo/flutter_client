@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_client/screens/initial_screen.dart';
 
-import 'auth_checker.dart';
-
 class Splash extends StatefulWidget {
   static const routeName = '/splash';
   const Splash({super.key});

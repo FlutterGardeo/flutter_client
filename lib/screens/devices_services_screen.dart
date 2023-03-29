@@ -1,18 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../components/devices_list.dart';
 import 'package:flutter_client/components/device_card.dart';
 import 'package:flutter_client/components/service_card.dart';
 import 'package:flutter_client/services/data_service.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-import '../components/services_list.dart';
+class DevicesAndServices extends StatelessWidget {
+  static const routeName = "/devices-and-services";
 
-class Dashboard extends StatelessWidget {
-  static const routeName = "/dashboard";
-
-  const Dashboard({
+  const DevicesAndServices({
     super.key,
   });
 
@@ -21,6 +17,7 @@ class Dashboard extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
+        backgroundColor: Colors.orange[400],
         appBar: AppBar(
           bottom: const TabBar(
             tabs: [
@@ -34,14 +31,29 @@ class Dashboard extends StatelessWidget {
               ),
             ],
           ),
-          title: const Text('Welcome to Kfone!'),
+          title: Text(
+            "Devices & Services",
+            style: GoogleFonts.openSans(
+              textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          leading: Icon(
+            Icons.ac_unit,
+            color: Colors.white,
+          ), // Add an icon or logo here
           actions: [
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () async {
                 // handle logout here
                 // TODO
-                
               },
               tooltip: 'Logout',
             ),

@@ -6,6 +6,8 @@ import 'package:flutter_client/widgets/dashboard.dart';
 import 'package:flutter_client/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
+import 'devices_services_screen.dart';
+
 class AdminPortal extends StatefulWidget {
   @override
   _AdminPortalState createState() => _AdminPortalState();
@@ -68,10 +70,10 @@ class _AdminPortalState extends State<AdminPortal> {
                       },
                     ),
                     Option(
-                      title: "Products",
+                      title: "Devices & Services",
                       img: "assets/products.png",
                       action: () {
-                        print("Inside Products");
+                        Navigator.pushNamed(context, DevicesAndServices.routeName);
                       },
                     ),
                     Option(

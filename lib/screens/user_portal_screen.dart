@@ -6,6 +6,8 @@ import 'package:flutter_client/widgets/dashboard.dart';
 import 'package:flutter_client/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
+import 'devices_services_screen.dart';
+
 class UserPortal extends StatefulWidget {
   @override
   _UserPortalState createState() => _UserPortalState();
@@ -47,19 +49,19 @@ class _UserPortalState extends State<UserPortal> {
                 child: Dashboard(
                   optionList: [
                     Option(
-                      title: "Products",
+                      title: "Devices & Services",
                       img: "assets/products.png",
                       action: () {
-                        print("Inside Products");
+                        Navigator.pushNamed(context, DevicesAndServices.routeName);
                       },
                     ),
-                    Option(
-                      title: "Services",
-                      img: "assets/services.png",
-                      action: () {
-                        print("Inside Services");
-                      },
-                    ),
+                    // Option(
+                    //   title: "Services",
+                    //   img: "assets/services.png",
+                    //   action: () {
+                    //     print("Inside Services");
+                    //   },
+                    // ),
                     Option(
                       title: "Subscriptions",
                       img: "assets/subscriptions.png",
