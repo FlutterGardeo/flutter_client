@@ -61,13 +61,13 @@ class AuthProvider with ChangeNotifier {
     try {
       result = await FlutterAppAuth().endSession(
         EndSessionRequest(
-          // idTokenHint: authResponse?.idToken,
-          idTokenHint: prefs.getString('kfone_id_token'),
-          postLogoutRedirectUrl: dotenv.env['CALLBACK_URI']!,
-          discoveryUrl: dotenv.env['DISCOVERY_URL']!,
-        ),
+            // idTokenHint: authResponse?.idToken,
+            idTokenHint: prefs.getString('kfone_id_token'),
+            postLogoutRedirectUrl: 'com.wso2.kfonelk://login-callback',
+            discoveryUrl: 'https://api.asgardeo.io/t/kfonelk/oauth2/token/.well-known/openid-configuration'),
       );
     } catch (e, s) {
+      print(e);
       inspect("logout error: $e - stack: $s");
       throw Exception("Failed to logout");
     }
