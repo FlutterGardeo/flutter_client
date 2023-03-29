@@ -5,6 +5,7 @@ import 'package:flutter_client/config/constants.dart';
 import 'package:flutter_client/services/auth_service.dart';
 
 class LoginScreen extends StatelessWidget {
+  static const routeName = '/';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override

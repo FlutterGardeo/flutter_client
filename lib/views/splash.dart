@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_client/screens/initial_screen.dart';
 
 import 'auth_checker.dart';
 
@@ -15,7 +16,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 1), () {
-      Navigator.of(context).pushReplacementNamed(AuthChecker.routeName);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
     });
   }
 
