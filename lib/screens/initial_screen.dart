@@ -18,30 +18,52 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: kPrimaryColor,
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            try {
-              await auth.login();
-              if (auth.isAuthenticated) {
-                await auth.getUserDetails();
-                if (auth.getAuthorizedUser?.lastName != null) {
-                  print("Admin User");
-                  Navigator.pushNamed(context, '/admin');
-                } else {
-                  print("NOT Admin User");
-                  Navigator.pushNamed(context, '/user');
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  await auth.login();
+                  if (auth.isAuthenticated) {
+                    await auth.getUserDetails();
+                    if (auth.getAuthorizedUser?.lastName != null) {
+                      print("Admin User");
+                      Navigator.pushNamed(context, '/admin');
+                    } else {
+                      print("NOT Admin User");
+                      Navigator.pushNamed(context, '/user');
+                    }
+                  }
+                } catch (error) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(error.toString()),
+                      duration: const Duration(seconds: 3),
+                    ),
+                  );
                 }
-              }
-            } catch (error) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(error.toString()),
-                  duration: const Duration(seconds: 3),
-                ),
-              );
-            }
-          },
-          child: const Text('Login'),
+              },
+              child: const Text('Login'),
+            ),
+            // ElevatedButton(
+            //   onPressed: () async {
+            //     try {
+            //       await auth.logout();
+            //       if (!auth.isAuthenticated) {
+            //         Navigator.pushNamed(context, '/');
+            //       }
+            //     } catch (error) {
+            //       ScaffoldMessenger.of(context).showSnackBar(
+            //         SnackBar(
+            //           content: Text(error.toString()),
+            //           duration: const Duration(seconds: 3),
+            //         ),
+            //       );
+            //     }
+            //   },
+            //   child: const Text('Logout'),
+            // ),
+          ],
         ),
       ),
     );
