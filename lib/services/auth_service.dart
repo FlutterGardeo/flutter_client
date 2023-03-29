@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import "package:http/http.dart" as http;
 
 import 'package:flutter_client/models/user.dart';
@@ -24,12 +26,13 @@ class AuthProvider with ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
+      await dotenv.load();
+
       authResponse = await const FlutterAppAuth().authorizeAndExchangeCode(
         AuthorizationTokenRequest(
-          'CupfurPk3WnXKtKTPu_elhf68oYa',
-          'com.wso2.exampleorg://login-callback',
-          discoveryUrl:
-              'https://api.asgardeo.io/t/exampleorg/oauth2/token/.well-known/openid-configuration',
+          dotenv.env['CLIENT_ID']!,
+          dotenv.env['CALLBACK_URI']!,
+          discoveryUrl: dotenv.env['DISCOVERY_URL']!,
           scopes: ["openid", "email", "profile", "groups" "internal_login"],
         ),
       );
@@ -40,6 +43,8 @@ class AuthProvider with ChangeNotifier {
       }
     } catch (e, s) {
       inspect("login error: $e - stack: $s");
+      print("login error: $e");
+      print("stack: $s");
       throw Exception("Failed to login");
     } finally {
       _isLoading = false;
@@ -52,9 +57,8 @@ class AuthProvider with ChangeNotifier {
       result = await FlutterAppAuth().endSession(
         EndSessionRequest(
           idTokenHint: authResponse?.idToken,
-          postLogoutRedirectUrl: 'com.wso2.exampleorg://login-callback',
-          discoveryUrl:
-              'https://api.asgardeo.io/t/exampleorg/oauth2/token/.well-known/openid-configuration',
+          postLogoutRedirectUrl: dotenv.env['CALLBACK_URI']!,
+          discoveryUrl: dotenv.env['DISCOVERY_URL']!,
         ),
       );
     } catch (e, s) {
@@ -68,7 +72,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> getUserDetails() async {
     final response = await http.get(
-      Uri.parse("https://api.asgardeo.io/t/exampleorg/oauth2/userinfo"),
+      Uri.parse(dotenv.env['USER_INFO_URL']!),
       headers: {"Authorization": "Bearer ${authResponse?.accessToken}"},
     );
 

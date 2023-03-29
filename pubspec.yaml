@@ -38,6 +38,7 @@ dependencies:
   provider: ^6.0.5
   google_fonts: ^4.0.3
   http: ^0.13.5
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -69,6 +70,7 @@ flutter:
     - assets/log-out.png
     - assets/services.png
     - assets/subscriptions.png
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
