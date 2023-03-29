@@ -3,6 +3,7 @@ Kfone
 Introducing the ultimate mobile app for purchasing your favorite devices and online services! Our app offers a one-stop-shop for all your tech needs, including smartphones, tablets, wearable devices, wireless services, internet services, and cloud services.
 
 Special Features
+
 :small_blue_diamond: MFA and Asgardeo as CIAM solution to offload the burden of managing users and handling logins, registrations, and verifying email details.
 :small_blue_diamond: At Kfone, we have successfully implemented a robust authentication protocol to facilitate privileged access to this avant-garde application, thus empowering our esteemed clients to effectively register and consummate services with utmost security and confidence.
 
