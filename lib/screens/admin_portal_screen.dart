@@ -73,7 +73,8 @@ class _AdminPortalState extends State<AdminPortal> {
                       title: "Devices & Services",
                       img: "assets/products.png",
                       action: () {
-                        Navigator.pushNamed(context, DevicesAndServices.routeName);
+                        Navigator.pushNamed(
+                            context, DevicesAndServices.routeName);
                       },
                     ),
                     Option(
@@ -82,7 +83,11 @@ class _AdminPortalState extends State<AdminPortal> {
                       action: () async {
                         try {
                           await auth.logout();
-                          Navigator.popUntil(context, ModalRoute.withName('/'));
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            '/login',
+                            (route) => false,
+                          );
                         } catch (error) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
