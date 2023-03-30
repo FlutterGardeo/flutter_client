@@ -135,13 +135,14 @@ class AuthProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseMap = jsonDecode(response.body);
+        print(responseMap);
+        print(responseMap['sub']);
+        print(responseMap['groups'][0]);
         print(responseMap['email']);
         print(responseMap['given_name']);
         print(responseMap['family_name']);
-        authorizedUser = User(
-            email: responseMap['email'],
-            firstName: responseMap['given_name'],
-            lastName: responseMap['family_name']);
+
+        authorizedUser = User.fromJson(responseMap);
       } else {
         throw Exception('Failed to get user details');
       }

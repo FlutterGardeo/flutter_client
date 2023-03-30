@@ -22,17 +22,32 @@ class _AdminPortalState extends State<AdminPortal> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            SizedBox(height: 10),
+            SizedBox(height: 40),
             AppBar(
-              title: Text(
-                "Admin Dashboard",
-                style: GoogleFonts.openSans(
-                  textStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
+              title: Column(
+                children: [
+                  Text(
+                    "Admin Dashboard",
+                    style: GoogleFonts.openSans(
+                      textStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(height: 4),
+                  Consumer<AuthProvider>(
+                    builder: (context, auth, _) => Text(
+                      "Hi ${auth.authorizedUser?.firstName}!",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               backgroundColor: Colors.transparent,
               elevation: 0,

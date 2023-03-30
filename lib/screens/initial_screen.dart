@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
         } else {
           // Authentication check is completed
           if (auth.isAuthenticated) {
-            if (auth.getAuthorizedUser?.lastName != null) {
+            if (auth.getAuthorizedUser?.group == 'admin') {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.pushNamed(context, '/admin');
               });
@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                       await auth.login();
                       if (auth.isAuthenticated) {
                         await auth.getUserDetails();
-                        if (auth.getAuthorizedUser?.lastName != null) {
+                        if (auth.getAuthorizedUser?.group == 'admin') {
                           WidgetsBinding.instance.addPostFrameCallback((_) {
                             Navigator.pushNamed(context, '/admin');
                           });
