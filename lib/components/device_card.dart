@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class DeviceCard extends StatelessWidget {
-  final String name;
+  final String? name;
   final double price;
-  final String description;
-  final String manufacturer;
-  final String imageUrl;
+  final String? description;
+  final String? manufacturer;
+  final String? imageUrl;
   final VoidCallback onAddToCart;
 
   const DeviceCard({
@@ -25,28 +25,28 @@ class DeviceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Image.network(
-            imageUrl,
+            imageUrl!,
             height: 200,
             fit: BoxFit.cover,
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              name,
+              name!,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              description,
+              description!,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              manufacturer,
+              manufacturer!,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),

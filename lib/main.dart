@@ -6,6 +6,7 @@ import 'package:flutter_client/screens/initial_screen.dart';
 import 'package:flutter_client/config/constants.dart';
 import 'package:flutter_client/screens/admin_portal_screen.dart';
 import 'package:flutter_client/screens/user_portal_screen.dart';
+import 'package:flutter_client/screens/splash_screen.dart';
 
 void main() {
   runApp(KFoneClient());
@@ -31,17 +32,14 @@ class KFoneClient extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => LoginScreen(),
+          '/': (context) => SplashScreen(),
+          '/login': (context) => LoginScreen(),
           '/user': (context) => Consumer<AuthProvider>(
                 builder: (context, auth, _) {
                   if (auth.isAuthenticated) {
-                    // if (auth.getAuthorizedUser?.lastName != null) {
-                    //   print("Admin User");
-                    //   return LogoutScreen();
-                    // } else {
-                    //   print("NOT Admin User");
-                    //   return LogoutScreen();
-                    // }
+                    print("User: ${auth.tokenResponse?.refreshToken}");
+                    print(auth.tokenResponse?.refreshToken.runtimeType);
+                    auth.saveAccessToken();
                     return UserPortal();
                   } else {
                     return LoginScreen();
@@ -51,13 +49,8 @@ class KFoneClient extends StatelessWidget {
           '/admin': (context) => Consumer<AuthProvider>(
                 builder: (context, auth, _) {
                   if (auth.isAuthenticated) {
-                    // if (auth.getAuthorizedUser?.lastName != null) {
-                    //   print("Admin User");
-                    //   return AdminPortal();
-                    // } else {
-                    //   print("NOT Admin User");
-                    //   return LoginScreen();
-                    // }
+                    print("Admin: ${auth.tokenResponse?.refreshToken}");
+                    auth.saveAccessToken();
                     return AdminPortal();
                   } else {
                     return LoginScreen();
