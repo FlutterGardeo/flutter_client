@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_client/components/device_card.dart';
 import 'package:flutter_client/components/service_card.dart';
+import 'package:flutter_client/services/auth_service.dart';
 import 'package:flutter_client/services/data_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class DevicesAndServices extends StatelessWidget {
   static const routeName = "/devices-and-services";
@@ -14,6 +16,8 @@ class DevicesAndServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late final auth = Provider.of<AuthProvider>(context, listen: false);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -62,7 +66,7 @@ class DevicesAndServices extends StatelessWidget {
         body: TabBarView(
           children: [
             FutureBuilder(
-              future: DataService.getAllDevices(),
+              future: DataService.getAllDevices(auth.tokenResponse),
               builder: (context, snapshot) {
                 print(snapshot.data);
                 if (snapshot.connectionState == ConnectionState.waiting) {
