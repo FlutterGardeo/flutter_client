@@ -13,13 +13,16 @@ class User {
     this.group,
   });
 
+  setGroup(String? groupName) {
+    group = groupName;
+  }
+
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['sub'],
       email: json['email'],
       firstName: json['given_name'],
       lastName: json['family_name'],
-      group: json['groups'][0],
     );
   }
 }
