@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_client/screens/devices_services_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_client/services/auth_service.dart';
@@ -34,6 +35,7 @@ class KFoneClient extends StatelessWidget {
         routes: {
           '/': (context) => SplashScreen(),
           '/login': (context) => LoginScreen(),
+          '/devices-and-services': (context) => DevicesAndServices(),
           '/user': (context) => Consumer<AuthProvider>(
                 builder: (context, auth, _) {
                   if (auth.isAuthenticated) {
