@@ -105,15 +105,17 @@ class AuthProvider with ChangeNotifier {
 
       await dotenv.load();
 
-      tokenResponse = await const FlutterAppAuth().token(TokenRequest(
-        dotenv.env['CLIENT_ID']!,
-        dotenv.env['CALLBACK_URI']!,
-        discoveryUrl: dotenv.env['DISCOVERY_URL']!,
-        refreshToken: refreshToken,
-        scopes: dotenv.env['SCOPES']?.split(","),
-      ));
+      if (await validateToken(refreshToken)) {
+        tokenResponse = await const FlutterAppAuth().token(TokenRequest(
+          dotenv.env['CLIENT_ID']!,
+          dotenv.env['CALLBACK_URI']!,
+          discoveryUrl: dotenv.env['DISCOVERY_URL']!,
+          refreshToken: refreshToken,
+          scopes: dotenv.env['SCOPES']?.split(","),
+        ));
+      }
 
-      print("hererrerere");
+      print("Not Valid");
     } catch (e, s) {
       inspect("Refresh Token Error: $e - stack: $s");
       throw Exception("Failed to refresh access token");
@@ -135,13 +137,6 @@ class AuthProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         final responseMap = jsonDecode(response.body);
-        print(responseMap);
-        print(responseMap['sub']);
-        print(responseMap['groups']);
-        print(responseMap['email']);
-        print(responseMap['given_name']);
-        print(responseMap['family_name']);
-
         authorizedUser = User.fromJson(responseMap);
 
         if (responseMap.containsKey('groups')) {
@@ -175,17 +170,12 @@ class AuthProvider with ChangeNotifier {
         print(
             "Inside Check Auth After Refresh Token: ${tokenResponse?.refreshToken}");
 
-        print(_isAuthenticated);
-
         _isAuthenticated = true;
 
-        print(_isAuthenticated);
         notifyListeners();
       }
     } catch (e, s) {
       inspect("Check Auth Error: $e - stack: $s");
-      print(e);
-      print(s);
       throw Exception("Failed to check Auth");
     } finally {
       _isLoading = false;
@@ -193,11 +183,9 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> validateAccessToken(String token) async {
-    final endpoint = 'https://api.asgardeo.io/t/kfonelk/oauth2/introspect';
-
+  Future<bool> validateToken(String token) async {
     final response = await http.post(
-      Uri.parse(endpoint),
+      Uri.parse(dotenv.env['TOKEN_INTROSPECT_ENDPOINT']!),
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Authorization':
@@ -211,9 +199,15 @@ class AuthProvider with ChangeNotifier {
     }
 
     final jsonResponse = jsonDecode(response.body);
-    _isAuthenticated = jsonResponse['active'] ?? false;
-    notifyListeners();
-    return _isAuthenticated;
+
+    if (jsonResponse['active']) {
+      return true;
+    } else {
+      return false;
+    }
+    // _isAuthenticated = jsonResponse['active'] ?? false;
+    // notifyListeners();
+    // return _isAuthenticated;
   }
 
   Future<void> saveAccessToken() async {

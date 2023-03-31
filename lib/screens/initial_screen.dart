@@ -38,9 +38,10 @@ class LoginScreen extends StatelessWidget {
           } else {
             // Show the login screen
             return Scaffold(
+              backgroundColor: Color(0xffffcc80),
               appBar: AppBar(
                 title: const Text('Login Screen'),
-                backgroundColor: kPrimaryColor,
+                backgroundColor: Colors.orange[400],
               ),
               body: Center(
                 child: ElevatedButton(

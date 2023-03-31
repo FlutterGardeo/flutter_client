@@ -22,12 +22,12 @@ class KFoneClient extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: kPrimaryColor,
-          accentColor: kPrimaryColor,
+          primaryColor: Colors.orange[400],
+          accentColor: Colors.orange[400],
           scaffoldBackgroundColor: kSecondaryColor,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(kPrimaryColor),
+              backgroundColor: MaterialStateProperty.all(Colors.orange[400]),
             ),
           ),
         ),
