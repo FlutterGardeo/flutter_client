@@ -116,7 +116,7 @@ class DataService {
 
     return true;
   }
-
+  
   static Future getCartDevices(TokenResponse? tokenResponse) async {
     List<DeviceModel> devices = [];
     String url = API_BASE_URL + "/cart/devices";
