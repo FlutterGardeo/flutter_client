@@ -46,5 +46,5 @@ Tech: mobile client-Flutter version 3, Admin portal- Flutter version 3
 :dart:Data Stores
 Mongodb
 
-:dart:Architectural diagram
+
 ![Architectural Diagram](https://github.com/FlutterGardeo/flutter_client/blob/main/assets/Screenshot%20from%202023-03-31%2011-39-40.png)
