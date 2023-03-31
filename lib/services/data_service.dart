@@ -86,7 +86,9 @@ class DataService {
     String userId,
     String itemType,
     String itemId,
+    TokenResponse? tokenResponse,
   ) async {
+    print("create cart item" + userId + itemType + itemId);
     final dio = Dio();
     // dio.interceptors.addAll([
     //   AuthInterceptor(dio),
@@ -108,7 +110,10 @@ class DataService {
       _url,
       data: jsonData,
       options: Options(
-        headers: {HttpHeaders.contentTypeHeader: "application/json"},
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          "Authorization": "Bearer ${tokenResponse?.accessToken}",
+        },
       ),
     );
 
@@ -142,8 +147,8 @@ class DataService {
     // );
 
     if (response.statusCode == 200) {
-      inspect(response.data);
-      for (var i = 0; i < response.data.length; i++) {
+      print('the langeth of data' + response.data[0]['devices'].length.toString());
+      for (var i = 0; i < response.data[0]['devices'].length; i++) {
         devices.add(DeviceModel(
           id: response.data[0]['devices'][i]["_id"],
           name: response.data[0]['devices'][i]["name"],
