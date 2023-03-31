@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_client/screens/cart_screen.dart';
 import 'package:flutter_client/screens/devices_services_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,7 @@ class KFoneClient extends StatelessWidget {
         routes: {
           '/': (context) => SplashScreen(),
           '/login': (context) => LoginScreen(),
+          '/cart': (context) => CartScreen(),
           '/devices-and-services': (context) => DevicesAndServices(),
           '/user': (context) => Consumer<AuthProvider>(
                 builder: (context, auth, _) {
