@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -121,7 +122,7 @@ class DataService {
 
     return true;
   }
-  
+
   static Future getCartDevices(TokenResponse? tokenResponse) async {
     List<DeviceModel> devices = [];
     String url = API_BASE_URL + "/cart/devices";
@@ -160,5 +161,42 @@ class DataService {
       }
     }
     return devices;
+  }
+
+  static Future checkout(
+    String userId,
+    double total,
+    TokenResponse? tokenResponse,
+  ) async {
+    final dio = Dio();
+    // dio.interceptors.addAll([
+    //   AuthInterceptor(dio),
+    // ]);
+
+    Map<String, dynamic> data = {
+      "userId": userId,
+      "total": total,
+    };
+
+    String jsonData = json.encode(data);
+
+    inspect(jsonData);
+
+    String _url = API_BASE_URL + '/checkout';
+
+    Response _response = await dio.post(
+      _url,
+      data: jsonData,
+      options: Options(
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          "Authorization": "Bearer ${tokenResponse?.accessToken}",
+        },
+      ),
+    );
+
+    if (_response.statusCode == 201) {}
+
+    return true;
   }
 }

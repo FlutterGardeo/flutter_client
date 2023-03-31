@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -35,11 +37,16 @@ class CartScreen extends StatelessWidget {
       body: FutureBuilder(
         future: DataService.getCartDevices(auth.tokenResponse),
         builder: (context, snapshot) {
+          double total = 0;
+
           print(snapshot.data);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
           } else if (snapshot.hasData) {
             List _items = snapshot.data as List;
+            for (var i = 0; i < _items.length; i++) {
+              total += _items[i].price as double;
+            }
 
             if (_items.length > 0) {
               return Column(
@@ -76,6 +83,8 @@ class CartScreen extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       print("Checkout");
+                      // print(total);
+                      DataService.checkout(auth.authorizedUser!.id, total, auth.tokenResponse);
                     },
                     child: Text("Checkout"),
                   ),
