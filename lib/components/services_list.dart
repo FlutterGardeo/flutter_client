@@ -14,6 +14,7 @@ class ServicesList extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final product = products[index];
         return ServiceCard(
+          id: product['_id'],
           description: product['description'],
           name: product['name'],
           onAddToCart: () {

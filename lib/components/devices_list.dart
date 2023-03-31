@@ -13,6 +13,7 @@ class DevicesList extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         final product = products[index];
         return DeviceCard(
+          id: product['_id'],
           imageUrl: product['imageUrl'],
           name: product['name'],
           price: product['price'],

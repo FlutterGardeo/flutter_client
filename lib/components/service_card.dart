@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
+  final String? id;
   final String description;
   final String name;
   final VoidCallback onAddToCart;
 
   const ServiceCard({
     Key? key,
+    required this.id,
     required this.description,
     required this.name,
     required this.onAddToCart,
