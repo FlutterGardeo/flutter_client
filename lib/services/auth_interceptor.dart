@@ -10,9 +10,11 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor(this._dio);
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    UserViewModel _user = UserViewModel.fromJson(jsonDecode(prefs.getString('kfone_user')!));
+    UserViewModel _user =
+        UserViewModel.fromJson(jsonDecode(prefs.getString('kfone_user')!));
 
     options.headers["Authorization"] = 'Bearer ${_user.accessToken}';
     return handler.next(options);

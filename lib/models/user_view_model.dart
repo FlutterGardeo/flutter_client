@@ -12,7 +12,6 @@ class UserViewModel {
     this.firstName,
     this.lastName,
     this.email,
-    this.accessToken,
   });
   Map<String, dynamic> toJson() {
     return {
@@ -21,7 +20,6 @@ class UserViewModel {
       "firstName": firstName,
       "lastName": lastName,
       "email": email,
-      "accessToken": accessToken,
     };
   }
 
@@ -31,6 +29,5 @@ class UserViewModel {
     firstName = json['firstName'];
     lastName = json['lastName'];
     email = json['email'];
-    accessToken = json['accessToken'];
   }
 }
