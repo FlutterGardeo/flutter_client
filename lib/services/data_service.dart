@@ -82,46 +82,6 @@ class DataService {
     return services;
   }
 
-  static Future getCartDevices(TokenResponse? tokenResponse) async {
-    final dio = Dio();
-    // dio.interceptors.addAll([
-    //   AuthInterceptor(dio),
-    // ]);
-
-    List<DeviceModel> devices = [];
-    String url = API_BASE_URL + "/cart/devices";
-
-    Response response = await dio.get(
-      url,
-      options: Options(
-        headers: {
-          HttpHeaders.contentTypeHeader: "application/json",
-          "Authorization": "Bearer ${tokenResponse?.accessToken}",
-        },
-      ),
-    );
-
-    // final response = await http.get(
-    //   Uri.parse(API_BASE_URL + "/device"),
-    //   headers: {"Authorization": "Bearer ${tokenResponse?.accessToken}"},
-    // );
-
-    if (response.statusCode == 200) {
-      inspect(response.data);
-      for (var i = 0; i < response.data.length; i++) {
-        devices.add(DeviceModel(
-          id: response.data[0]['devices'][i]["_id"],
-          name: response.data[0]['devices'][i]["name"],
-          description: response.data[0]['devices'][i]["description"],
-          manufacturer: response.data[0]['devices'][i]["manufacturer"],
-          imageUrl: response.data[0]['devices'][i]["imageUrl"],
-          price: double.parse(response.data[0]['devices'][i]["price"].toString()),
-        ));
-      }
-    }
-    return devices;
-  }
-
   static Future create(
     String userId,
     String itemType,
