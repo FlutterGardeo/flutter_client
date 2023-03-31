@@ -36,7 +36,7 @@ Google
 Ethereum
 
 :dart:Backend Scope
-Tech: NestJS, Atlas app services
+Tech: NodeJS, Atlas app services
 API
 
 :dart:Frontend Scope
