@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -86,7 +87,9 @@ class DataService {
     String userId,
     String itemType,
     String itemId,
+    TokenResponse? tokenResponse,
   ) async {
+    print("create cart item" + userId + itemType + itemId);
     final dio = Dio();
     // dio.interceptors.addAll([
     //   AuthInterceptor(dio),
@@ -108,7 +111,87 @@ class DataService {
       _url,
       data: jsonData,
       options: Options(
-        headers: {HttpHeaders.contentTypeHeader: "application/json"},
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          "Authorization": "Bearer ${tokenResponse?.accessToken}",
+        },
+      ),
+    );
+
+    if (_response.statusCode == 201) {}
+
+    return true;
+  }
+
+  static Future getCartDevices(TokenResponse? tokenResponse) async {
+    List<DeviceModel> devices = [];
+    String url = API_BASE_URL + "/cart/devices";
+
+    final dio = Dio();
+    // dio.interceptors.addAll([
+    //   AuthInterceptor(dio),
+    // ]);
+
+    Response response = await dio.get(
+      url,
+      options: Options(
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          "Authorization": "Bearer ${tokenResponse?.accessToken}",
+        },
+      ),
+    );
+
+    // final response = await http.get(
+    //   Uri.parse(API_BASE_URL + "/device"),
+    //   headers: {"Authorization": "Bearer ${tokenResponse?.accessToken}"},
+    // );
+
+    if (response.statusCode == 200) {
+      print('the langeth of data' + response.data[0]['devices'].length.toString());
+      for (var i = 0; i < response.data[0]['devices'].length; i++) {
+        devices.add(DeviceModel(
+          id: response.data[0]['devices'][i]["_id"],
+          name: response.data[0]['devices'][i]["name"],
+          description: response.data[0]['devices'][i]["description"],
+          manufacturer: response.data[0]['devices'][i]["manufacturer"],
+          imageUrl: response.data[0]['devices'][i]["imageUrl"],
+          price: double.parse(response.data[0]['devices'][i]["price"].toString()),
+        ));
+      }
+    }
+    return devices;
+  }
+
+  static Future checkout(
+    String userId,
+    double total,
+    TokenResponse? tokenResponse,
+  ) async {
+    final dio = Dio();
+    // dio.interceptors.addAll([
+    //   AuthInterceptor(dio),
+    // ]);
+
+    Map<String, dynamic> data = {
+      "userId": userId,
+      "total": total,
+    };
+
+    String jsonData = json.encode(data);
+
+    inspect(jsonData);
+
+    String _url = API_BASE_URL + '/checkout';
+
+    Response _response = await dio.post(
+      _url,
+      data: jsonData,
+      options: Options(
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          "Authorization": "Bearer ${tokenResponse?.accessToken}",
+        },
       ),
     );
 

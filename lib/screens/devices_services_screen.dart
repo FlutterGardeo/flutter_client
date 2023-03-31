@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_client/components/device_card.dart';
 import 'package:flutter_client/components/service_card.dart';
+import 'package:flutter_client/screens/cart_screen.dart';
 import 'package:flutter_client/services/auth_service.dart';
 import 'package:flutter_client/services/data_service.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,6 +64,14 @@ class DevicesAndServices extends StatelessWidget {
             ),
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Add your onPressed code here!
+            Navigator.pushNamedAndRemoveUntil(context, CartScreen.routeName, (route) => true);
+          },
+          child: const Icon(Icons.shopping_bag),
+          backgroundColor: Colors.green[800],
+        ),
         body: TabBarView(
           children: [
             FutureBuilder(
@@ -88,7 +97,7 @@ class DevicesAndServices extends StatelessWidget {
                           onAddToCart: () {
                             print(_items[index].id);
                             try {
-                              DataService.create('40941c02-e0ae-4d90-a23e-5471ae5b2b4e', 'device', _items[index].id.toString());
+                              DataService.create(auth.authorizedUser!.id, 'device', _items[index].id.toString(), auth.tokenResponse);
                             } catch (e) {
                               print(e);
                             }
@@ -126,7 +135,7 @@ class DevicesAndServices extends StatelessWidget {
                           onAddToCart: () {
                             print(_items[index].id);
                             try {
-                              DataService.create('40941c02-e0ae-4d90-a23e-5471ae5b2b4e', 'service', _items[index].id.toString());
+                              DataService.create(auth.authorizedUser!.id, 'service', _items[index].id.toString(), auth.tokenResponse);
                             } catch (e) {
                               print(e);
                             }
